@@ -1,30 +1,98 @@
 <template>
+  <!DOCTYPE html>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Todolist</router-link> |
+    <router-link to="/imprint">Imprint</router-link>
   </nav>
   <router-view />
+  <main>
+    <article class="todo-article" id="app">
+      <h1>My Todo-App with Vue</h1>
+      <h2 class="claim">Getting things done…</h2>
+    </article>
+  </main>
 </template>
-
+<script>
+export default {};
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --front-color: white;
+  --gradient1-color: #8e2de2;
+  --gradient2-color: #4a00e0;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  background: linear-gradient(
+    to right,
+    var(--gradient1-color),
+    var(--gradient2-color)
+  );
+  color: var(--front-color);
+  font-family: monospace;
+  height: 100vh;
+}
+
+h1,
+h2 {
+  font-weight: normal;
+  font-size: 4rem;
+  margin-block: 0.5rem 3.5rem;
   text-align: center;
-  color: #2c3e50;
+}
+h2 {
+  font-size: 3rem;
 }
 
 nav {
-  padding: 30px;
+  background: black;
+  padding: 2rem;
+  text-align: center;
+  width: 80vw;
+  border-radius: 1rem;
+  margin: 0 auto;
+  font-size: 2rem;
 }
 
 nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  font-size: 2rem;
+  color: var(--front-color);
+  text-decoration: none;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-article {
+  width: 80vw;
+  padding: 2rem;
+  background: black;
+  border-radius: 1rem;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
+  margin-top: 2rem;
+}
+button {
+  text-transform: uppercase;
+  border: 5px solid var(--gradient2-color);
+  border-radius: 0.5rem;
+  background: black;
+  color: var(--white-color);
+  font-family: monospace;
+  padding: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+button:hover,
+button:active,
+button:focus,
+select:hover,
+select:active,
+select:focus {
+  border: 5px solid var(--gradient1-color);
 }
 </style>
