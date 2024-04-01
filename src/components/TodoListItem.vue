@@ -1,29 +1,37 @@
 <template>
-  <li class="task-item" v-for="todo of filteredTodos" :key="todo.id">
+  <li class="task-item">
     <div class="checkbox-wrapper">
       <input
         type="checkbox"
-        name="item-1"
-        id="'item-' + todo.id"
+        name="todo.id"
+        :id="todo.id"
+        :for="key"
         :value="todo.id"
+        @change="updateTodo"
         :checked="todo.done"
-        @change="updateTodo(todo)"
       />
-      <label :for="'item-' + todo.id">{{ todo.description }}</label>
-      <button class="delete-task" @click="deleteTodo(todo.id)">X</button>
+      <label :for="todo.id">
+        <span>{{ todo.description }}</span>
+      </label>
 
-      <!-- <FormButton class="delete-task" buttonType="deleteTodo">X</FormButton> -->
+      <button class="delete-task" @click="deleteTodo">X</button>
     </div>
   </li>
 </template>
+
+<style scoped>
+input:checked ~ span {
+  text-decoration: line-through;
+}
+</style>
+
 <script>
-/* import FormButton from "@/components/FormButton.vue"; */
+const apiUrl = "http://localhost:4730";
 
 export default {
-  name: "TodoList",
-  emits: ["updateDoneTodo"],
+  name: "TodoListItem",
+  emits: ["updateDoneTodo", "deleteTodo"],
 
-  components: {},
   data() {
     return {
       value: "",
@@ -44,41 +52,36 @@ export default {
       const clickedTodo = this.todo;
       this.$emit("updateDoneTodo", clickedTodo);
     },
+    async deleteTodo() {
+      try {
+        await fetch(`${apiUrl}/todos/${this.todo.id}`, {
+          method: "DELETE",
+        });
+        this.$emit("deleteTodo", this.todo.id); // Nur die ID übermitteln
+      } catch (error) {
+        console.error("Fehler beim Löschen des Todos:", error);
+      }
+    },
   },
 };
 </script>
-<style scoped>
-input:checked ~ span {
-  text-decoration: line-through;
-}
-
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: linear-gradient(0deg, #ddd 50%, #fff 50%);
-  border-radius: 1rem;
-  border: 5px solid var(--gradient2-color);
-  color: var(--black-color);
-  font-size: 2rem;
-  transition: 0.5s;
-}
-.checkbox-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-}
-
+<style>
 .checkbox-wrapper label {
   cursor: pointer;
   color: black;
   flex-grow: 2;
 }
+
+input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  font-style: italic;
+  color: var(--gradient1-color);
+}
+
+.task-item:has(input[type="checkbox"]:checked) {
+  opacity: 0.4;
+}
+
 /* Checkbox */
 
 input[type="checkbox"] {
@@ -92,6 +95,7 @@ input[type="checkbox"] {
   display: grid;
   place-content: center;
   height: 5rem;
+  width: 5rem;
   cursor: pointer;
 }
 

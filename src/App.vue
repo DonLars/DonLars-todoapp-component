@@ -1,16 +1,11 @@
 <template>
-  <!DOCTYPE html>
-  <nav>
-    <router-link to="/">Todolist</router-link> |
-    <router-link to="/imprint">Imprint</router-link>
-  </nav>
-  <router-view />
-  <main>
-    <article class="todo-article" id="app">
-      <h1>My Todo-App with Vue</h1>
-      <h2 class="claim">Getting things done…</h2>
-    </article>
-  </main>
+  <div>
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view />
+  </div>
 </template>
 <script>
 export default {};
@@ -81,7 +76,7 @@ button {
   border: 5px solid var(--gradient2-color);
   border-radius: 0.5rem;
   background: black;
-  color: var(--white-color);
+  color: var(--front-color);
   font-family: monospace;
   padding: 1rem;
   font-size: 2rem;

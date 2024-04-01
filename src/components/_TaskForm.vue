@@ -1,10 +1,11 @@
 <template>
   <form id="task-form">
-    <InputField />
-    <button id="clear-btn" @click="deleteDoneTodos">remove</button>
-    <RadioFilter />
+    <InputField v-model="newTodoText" @enter="addTodo" />
+    <button id="clear-btn" @click="deleteDoneTodos">Remove completed</button>
+    <RadioFilter v-model="filter" />
   </form>
 </template>
+
 <script>
 import InputField from "@/components/InputField.vue";
 import RadioFilter from "@/components/RadioFilter.vue";
@@ -17,12 +18,5 @@ export default {
   },
 };
 </script>
-<style scoped>
-#task-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-}
-</style>
+
+<style scoped></style>

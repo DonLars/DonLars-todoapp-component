@@ -1,39 +1,49 @@
 <template>
-  <label class="hidden" for="input-field">new task</label>
-  <input
-    type="text"
-    v-model="newTodoText"
-    name="input-field"
-    id="input"
-    placeholder="Start your list!"
-    autofocus
-  />
-  <button @click.prevent="addNewTodo" type="submit">Add</button>
+  <form id="task-form">
+    <label class="hidden" for="input-field">new task</label>
+    <input
+      type="text"
+      v-model="newTodoText"
+      name="input-field"
+      id="input"
+      placeholder="Start your list!"
+      autofocus
+    />
+    <!-- <p>{{ newTodoText }}</p> -->
 
-  <!-- <FormButton buttonType="submit">add</FormButton> -->
+    <button @click.prevent="addNewTodo" type="submit">Add</button>
+  </form>
 </template>
+
 <script>
 export default {
   name: "InputField",
-  components: {},
+  emits: ["addTodo"],
+
+  data() {
+    return {
+      newTodoText: "",
+    };
+  },
+
+  methods: {
+    addNewTodo() {
+      const newTodo = {
+        description: this.newTodoText.trim(),
+        done: false,
+      };
+      this.$emit("addTodo", newTodo);
+
+      this.newTodoText = "";
+    },
+  },
 };
 </script>
-<style>
+<style scoped>
 .hidden {
   position: absolute;
   left: -9999px;
 }
-
-input[type="checkbox"]:checked + label {
-  text-decoration: line-through;
-  font-style: italic;
-  color: var(--gradient1-color);
-}
-
-.task-item:has(input[type="checkbox"]:checked) {
-  opacity: 0.4;
-}
-
 input {
   border: 5px solid var(--gradient1-color);
   font-size: 2rem;
@@ -45,5 +55,9 @@ input {
 input:focus {
   outline: 0;
   border: 5px solid var(--gradient2-color);
+}
+
+#task-form input {
+  margin-right: 1rem;
 }
 </style>
